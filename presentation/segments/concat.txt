@@ -1,8 +1,0 @@
-file '01-landing.mp4'
-file '02-login.mp4'
-file '03-parent-hub.mp4'
-file '04-teacher-console.mp4'
-file '05-admin-center.mp4'
-file '06-enrolment-wizard.mp4'
-file '07-pdf-guide.mp4'
-file '08-outro.mp4'
