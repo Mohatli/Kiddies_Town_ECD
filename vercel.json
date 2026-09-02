@@ -1,0 +1,51 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": null,
+  "installCommand": "npm install",
+  "functions": {
+    "api/index.ts": {
+      "maxDuration": 30,
+      "includeFiles": [
+        "src/data/mockData.ts",
+        "server/**",
+        "node_modules/@neondatabase/**",
+        "node_modules/bcryptjs/**",
+        "node_modules/jsonwebtoken/**",
+        "node_modules/compression/**",
+        "node_modules/helmet/**",
+        "node_modules/cors/**",
+        "node_modules/express-rate-limit/**",
+        "node_modules/pino/**",
+        "node_modules/pino-pretty/**",
+        "node_modules/pdfkit/**",
+        "node_modules/zod/**",
+        "node_modules/dotenv/**"
+      ]
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "/api"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store" }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    }
+  ]
+}

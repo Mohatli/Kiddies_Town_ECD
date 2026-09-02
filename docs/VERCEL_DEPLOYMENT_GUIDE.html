@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kiddies Town ECD & Academy — Vercel + Neon Deployment Guide</title>
+<style>
+  @page { margin: 1.5cm 2cm; size: A4; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 11pt;
+    line-height: 1.5;
+    color: #1a1a2e;
+    max-width: 210mm;
+    margin: 0 auto;
+    padding: 20px 30px;
+  }
+  .cover {
+    text-align: center;
+    padding: 60px 0 40px;
+    border-bottom: 3px solid #4361ee;
+    margin-bottom: 30px;
+  }
+  .cover h1 {
+    font-size: 28pt;
+    color: #4361ee;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .cover .subtitle {
+    font-size: 16pt;
+    color: #3a0ca3;
+    margin-bottom: 20px;
+  }
+  .cover .meta {
+    font-size: 10pt;
+    color: #666;
+    line-height: 1.8;
+  }
+  h2 {
+    font-size: 16pt;
+    color: #4361ee;
+    border-bottom: 2px solid #e8e8f0;
+    padding-bottom: 6px;
+    margin: 30px 0 14px;
+    page-break-after: avoid;
+  }
+  h3 {
+    font-size: 12pt;
+    color: #3a0ca3;
+    margin: 18px 0 8px;
+    page-break-after: avoid;
+  }
+  p, li { margin-bottom: 6px; }
+  ul, ol { padding-left: 22px; margin-bottom: 12px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0 16px;
+    font-size: 10pt;
+  }
+  th, td {
+    border: 1px solid #d0d0e0;
+    padding: 7px 10px;
+    text-align: left;
+  }
+  th {
+    background: #f0f0f8;
+    font-weight: 600;
+    color: #1a1a2e;
+  }
+  tr:nth-child(even) td { background: #fafaff; }
+  code {
+    font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 9.5pt;
+    background: #f0f0f8;
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: #e63946;
+  }
+  pre {
+    background: #1a1a2e;
+    color: #e8e8f0;
+    padding: 14px 18px;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 8px 0 14px;
+    font-size: 9pt;
+    line-height: 1.6;
+    page-break-inside: avoid;
+  }
+  pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+  }
+  .arch-box {
+    background: #f8f8ff;
+    border: 2px solid #4361ee;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 12px 0 16px;
+    page-break-inside: avoid;
+  }
+  .arch-box pre { margin: 0; background: #fff; color: #1a1a2e; border: 1px solid #e0e0f0; }
+  .warning {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 10px 14px;
+    margin: 10px 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .warning::before { content: "⚠ "; font-weight: bold; }
+  .tip {
+    background: #d4edda;
+    border-left: 4px solid #28a745;
+    padding: 10px 14px;
+    margin: 10px 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .tip::before { content: "✓ "; font-weight: bold; }
+  .file-table td:first-child { font-family: monospace; font-size: 9.5pt; white-space: nowrap; }
+  .toc { margin: 10px 0 20px; }
+  .toc ol { padding-left: 20px; }
+  .toc li { margin-bottom: 4px; }
+  .toc a { color: #4361ee; text-decoration: none; }
+  hr { border: none; border-top: 1px solid #e0e0f0; margin: 20px 0; }
+  @media print {
+    body { padding: 0; }
+    .cover { page-break-after: always; }
+    h2 { page-break-before: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover">
+  <h1>Kiddies Town ECD &amp; Academy</h1>
+  <div class="subtitle">Vercel + Neon Deployment Guide</div>
+  <div class="meta">
+    <strong>Version:</strong> 1.0 &nbsp;|&nbsp; <strong>Date:</strong> 26 August 2026<br>
+    <strong>Platform:</strong> Vercel (Frontend + API) &nbsp;+&nbsp; NeonDB (PostgreSQL)<br>
+    <strong>Stack:</strong> React 19, TypeScript, Vite, Express 4, NeonDB
+  </div>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc">
+  <h2>Table of Contents</h2>
+  <ol>
+    <li><a href="#arch">Architecture Overview</a></li>
+    <li><a href="#prereq">Prerequisites</a></li>
+    <li><a href="#env">Environment Variables</a></li>
+    <li><a href="#repo">Repository Setup</a></li>
+    <li><a href="#deploy">Vercel Deployment</a></li>
+    <li><a href="#neon">Neon Database Setup</a></li>
+    <li><a href="#verify">Post-Deployment Verification</a></li>
+    <li><a href="#troubleshoot">Troubleshooting</a></li>
+    <li><a href="#files">Files Modified for Deployment</a></li>
+    <li><a href="#appendix">Appendices</a></li>
+  </ol>
+</div>
+
+<!-- 1. ARCHITECTURE -->
+<h2 id="arch">1. Architecture Overview</h2>
+
+<div class="arch-box">
+<pre>
+┌──────────────────────────────────────────────────────────┐
+│                       BROWSER                            │
+│                                                          │
+│  React SPA (Vite)           Express API Server           │
+│  ─────────────────          ─────────────────            │
+│  Static files served        Serverless Function          │
+│  from Vercel CDN            (api/index.ts)               │
+│  via /assets/*              handles /api/*               │
+│                                                          │
+└─────────────┬────────────────────────┬───────────────────┘
+              │                        │
+              ▼                        ▼
+┌─────────────────────┐   ┌─────────────────────────┐
+│   Vercel CDN        │   │  Vercel Serverless      │
+│   (Static Assets)   │   │  Function               │
+│                     │   │                         │
+│  - index.html       │   │  - Express App          │
+│  - JS chunks        │   │  - JWT Auth             │
+│  - CSS              │   │  - Rate Limiting        │
+│  - Images           │   │  - RBAC                 │
+└─────────────────────┘   └────────────┬────────────┘
+                                       │
+                                       ▼
+                            ┌─────────────────────────┐
+                            │   NeonDB (PostgreSQL)    │
+                            │                         │
+                            │  - Serverless driver    │
+                            │  - HTTP-based queries   │
+                            │  - No persistent conn   │
+                            └─────────────────────────┘
+</pre>
+</div>
+
+<h3>Request Flow</h3>
+<ol>
+  <li>Browser requests <code>https://your-app.vercel.app/</code> → Vercel serves <code>dist/index.html</code></li>
+  <li>Browser requests <code>https://your-app.vercel.app/api/data/learners</code> → Vercel rewrites to serverless function</li>
+  <li>Serverless function runs Express app → queries NeonDB via HTTP → returns JSON</li>
+  <li>React Query caches the response client-side</li>
+</ol>
+
+<!-- 2. PREREQUISITES -->
+<h2 id="prereq">2. Prerequisites</h2>
+
+<table>
+  <tr><th>Requirement</th><th>Version</th><th>Notes</th></tr>
+  <tr><td>Node.js</td><td>18+</td><td>Recommended: 20 LTS</td></tr>
+  <tr><td>npm</td><td>9+</td><td></td></tr>
+  <tr><td>Git</td><td>2.30+</td><td></td></tr>
+  <tr><td>GitHub account</td><td>—</td><td>For repository hosting</td></tr>
+  <tr><td>Vercel account</td><td>—</td><td>Free tier sufficient for start</td></tr>
+  <tr><td>Neon account</td><td>—</td><td>Free tier: 0.5 GB storage</td></tr>
+</table>
+
+<!-- 3. ENVIRONMENT VARIABLES -->
+<h2 id="env">3. Environment Variables</h2>
+
+<h3>Required (set in Vercel Dashboard)</h3>
+<table>
+  <tr><th>Variable</th><th>Value</th><th>How to Generate</th></tr>
+  <tr><td><code>DATABASE_URL</code></td><td><code>postgresql://...</code></td><td>Neon dashboard → Connection Details</td></tr>
+  <tr><td><code>JWT_SECRET</code></td><td>64+ char random string</td><td><code>openssl rand -hex 64</code></td></tr>
+  <tr><td><code>JWT_REFRESH_SECRET</code></td><td>64+ char random string</td><td><code>openssl rand -hex 64</code></td></tr>
+  <tr><td><code>NODE_ENV</code></td><td><code>production</code></td><td>Static value</td></tr>
+  <tr><td><code>CORS_ORIGIN</code></td><td><code>https://your-app.vercel.app</code></td><td>Your Vercel domain</td></tr>
+</table>
+
+<h3>Optional</h3>
+<table>
+  <tr><th>Variable</th><th>Default</th><th>Notes</th></tr>
+  <tr><td><code>GEMINI_API_KEY</code></td><td>—</td><td>Google AI PDF generation</td></tr>
+  <tr><td><code>APP_URL</code></td><td>—</td><td>Used for email links</td></tr>
+  <tr><td><code>PORT</code></td><td><code>3000</code></td><td>Ignored on Vercel</td></tr>
+</table>
+
+<h3>Setting Environment Variables on Vercel</h3>
+<pre><code># Via Vercel CLI
+vercel env add DATABASE_URL production
+vercel env add JWT_SECRET production
+vercel env add JWT_REFRESH_SECRET production
+vercel env add NODE_ENV production
+vercel env add CORS_ORIGIN production
+
+# Or via Vercel Dashboard:
+# Project Settings → Environment Variables → Add</code></pre>
+
+<!-- 4. REPOSITORY SETUP -->
+<h2 id="repo">4. Repository Setup</h2>
+
+<h3>4.1 Initialize Git (if not already done)</h3>
+<pre><code>cd "path/to/kiddies-town-portal"
+git init
+git add -A
+git commit -m "feat: initial deployment configuration"</code></pre>
+
+<h3>4.2 Create .gitignore Entries</h3>
+<pre><code># Environment
+.env
+.env.local
+.env.*.local
+
+# Build
+dist/
+.tmp/
+
+# Data
+data_store.json
+
+# Dependencies
+node_modules/
+
+# IDE
+.vscode/
+.idea/</code></pre>
+
+<h3>4.3 Push to GitHub</h3>
+<pre><code>git remote add origin https://github.com/your-username/kiddies-town-portal.git
+git branch -M main
+git push -u origin main</code></pre>
+
+<!-- 5. VERCEL DEPLOYMENT -->
+<h2 id="deploy">5. Vercel Deployment</h2>
+
+<h3>5.1 Import Project</h3>
+<ol>
+  <li>Go to <a href="https://vercel.com/new">vercel.com/new</a></li>
+  <li>Click <strong>"Import Git Repository"</strong></li>
+  <li>Select your GitHub repository</li>
+  <li>Configure:
+    <ul>
+      <li><strong>Framework Preset:</strong> Other</li>
+      <li><strong>Build Command:</strong> <code>npm run build</code></li>
+      <li><strong>Output Directory:</strong> <code>dist</code></li>
+      <li><strong>Install Command:</strong> <code>npm install</code></li>
+    </ul>
+  </li>
+  <li>Click <strong>Deploy</strong></li>
+</ol>
+
+<h3>5.2 Configure Environment Variables</h3>
+<p>After deployment, go to <strong>Project Settings → Environment Variables</strong> and add:</p>
+<pre><code>DATABASE_URL = postgresql://neondb_owner:xxxx@ep-xxxxx.us-east-1.aws.neon.tech/neondb?sslmode=require
+JWT_SECRET = &lt;your-generated-secret&gt;
+JWT_REFRESH_SECRET = &lt;your-generated-secret&gt;
+NODE_ENV = production
+CORS_ORIGIN = https://your-project.vercel.app</code></pre>
+
+<h3>5.3 Redeploy</h3>
+<p>After setting environment variables, trigger a redeployment:</p>
+<pre><code>vercel --prod</code></pre>
+<p>Or click <strong>"Redeploy"</strong> in the Vercel dashboard.</p>
+
+<h3>5.4 Custom Domain (Optional)</h3>
+<ol>
+  <li>Go to <strong>Project Settings → Domains</strong></li>
+  <li>Add your custom domain (e.g., <code>kiddiestown.co.za</code>)</li>
+  <li>Update <code>CORS_ORIGIN</code> to include your custom domain</li>
+  <li>Redeploy</li>
+</ol>
+
+<!-- 6. NEON DATABASE -->
+<h2 id="neon">6. Neon Database Setup</h2>
+
+<h3>6.1 Create Neon Project</h3>
+<ol>
+  <li>Go to <a href="https://neon.tech">neon.tech</a></li>
+  <li>Sign up / log in</li>
+  <li>Create a new project</li>
+  <li>Note the connection string (you'll need it for <code>DATABASE_URL</code>)</li>
+</ol>
+
+<h3>6.2 Connection String Format</h3>
+<pre><code>postgresql://neondb_owner:password@ep-xxxxx.us-east-1.aws.neon.tech/neondb?sslmode=require</code></pre>
+
+<div class="warning">
+  Use the <strong>Pooled</strong> connection string for serverless (Vercel). The pooler handles connection multiplexing for concurrent serverless functions.
+</div>
+
+<h3>6.3 Schema Bootstrap</h3>
+<p>On first deployment, the app automatically:</p>
+<ol>
+  <li>Creates all database tables (12 tables)</li>
+  <li>Creates PostgreSQL enum types</li>
+  <li>Seeds initial data (learners, themes, events, etc.)</li>
+</ol>
+
+<div class="tip">This only happens once — subsequent deployments skip seeding if data exists.</div>
+
+<h3>6.4 Production Safety</h3>
+<p>The <code>bootstrapSchema()</code> function is gated for production:</p>
+<ul>
+  <li><strong>Development:</strong> Drops and recreates tables (for schema iteration)</li>
+  <li><strong>Production:</strong> Only creates missing tables/indexes (preserves existing data)</li>
+</ul>
+
+<!-- 7. POST-DEPLOYMENT VERIFICATION -->
+<h2 id="verify">7. Post-Deployment Verification</h2>
+
+<h3>7.1 Health Check</h3>
+<pre><code>curl https://your-app.vercel.app/api/health
+# Expected: {"status":"healthy","timestamp":"...","version":"2.0.0"}</code></pre>
+
+<h3>7.2 Login Test</h3>
+<pre><code>curl -X POST https://your-app.vercel.app/api/v1/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"admin@kiddiestown.co.za","password":"admin"}'
+# Expected: {"success":true,"token":"...","refreshToken":"...","user":{...}}</code></pre>
+
+<h3>7.3 Data Fetch Test</h3>
+<pre><code># First login to get token, then:
+curl https://your-app.vercel.app/api/v1/data \
+  -H "Authorization: Bearer &lt;token&gt;"
+# Expected: JSON with learners, themes, events, etc.</code></pre>
+
+<h3>7.4 Frontend Test</h3>
+<ol>
+  <li>Open <code>https://your-app.vercel.app</code> in browser</li>
+  <li>Verify landing page loads</li>
+  <li>Click <strong>Login</strong> → enter credentials</li>
+  <li>Verify dashboard loads with data</li>
+  <li>Test CRUD operations (add/edit/delete)</li>
+</ol>
+
+<!-- 8. TROUBLESHOOTING -->
+<h2 id="troubleshoot">8. Troubleshooting</h2>
+
+<h3>Issue: "Invalid environment variables" on deploy</h3>
+<p><strong>Cause:</strong> Missing or invalid <code>JWT_SECRET</code> / <code>JWT_REFRESH_SECRET</code></p>
+<p><strong>Fix:</strong> Ensure both secrets are at least 32 characters. Generate with:</p>
+<pre><code>node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"</code></pre>
+
+<h3>Issue: "Neon query failed, falling back to local store"</h3>
+<p><strong>Cause:</strong> <code>DATABASE_URL</code> not set or invalid</p>
+<p><strong>Fix:</strong></p>
+<ol>
+  <li>Verify <code>DATABASE_URL</code> is set in Vercel dashboard</li>
+  <li>Check the Neon connection string format</li>
+  <li>Ensure Neon project is active (not paused)</li>
+</ol>
+
+<h3>Issue: CORS errors in browser console</h3>
+<p><strong>Cause:</strong> <code>CORS_ORIGIN</code> doesn't match your Vercel domain</p>
+<p><strong>Fix:</strong> Update <code>CORS_ORIGIN</code> to <code>https://your-exact-domain.vercel.app</code></p>
+
+<h3>Issue: "DROP TABLE" errors in production logs</h3>
+<p><strong>Cause:</strong> Bootstrap dropping tables on cold start</p>
+<p><strong>Fix:</strong> Already fixed — production mode only creates missing tables. Ensure <code>NODE_ENV=production</code> is set.</p>
+
+<h3>Issue: 502 Bad Gateway on API routes</h3>
+<p><strong>Cause:</strong> Serverless function timeout or cold start</p>
+<p><strong>Fix:</strong></p>
+<ol>
+  <li>Check function logs in Vercel dashboard</li>
+  <li>Increase <code>maxDuration</code> in <code>vercel.json</code> (current: 30s)</li>
+  <li>Check Neon connection health</li>
+</ol>
+
+<h3>Issue: Static assets 404</h3>
+<p><strong>Cause:</strong> <code>outputDirectory</code> misconfigured</p>
+<p><strong>Fix:</strong> Ensure <code>vercel.json</code> has <code>"outputDirectory": "dist"</code> and <code>npm run build</code> outputs to <code>dist/</code></p>
+
+<!-- 9. FILES MODIFIED -->
+<h2 id="files">9. Files Modified for Deployment</h2>
+
+<table class="file-table">
+  <tr><th>File</th><th>Changes</th></tr>
+  <tr><td><code>vercel.json</code></td><td><strong>New</strong> — Vercel configuration (rewrites, headers, functions)</td></tr>
+  <tr><td><code>api/index.ts</code></td><td><strong>New</strong> — Serverless function entry point</td></tr>
+  <tr><td><code>server/db/bootstrap.ts</code></td><td>Gated table drops for production</td></tr>
+  <tr><td><code>server/config/database.ts</code></td><td>Disabled file I/O in serverless mode</td></tr>
+  <tr><td><code>server/app.ts</code></td><td>CORS auto-allows Vercel preview deployments</td></tr>
+  <tr><td><code>.env.example</code></td><td>Updated with security guidance</td></tr>
+</table>
+
+<!-- APPENDICES -->
+<h2 id="appendix">Appendices</h2>
+
+<h3>Appendix A: Vercel CLI Commands</h3>
+<pre><code># Install Vercel CLI
+npm i -g vercel
+
+# Login
+vercel login
+
+# Deploy (preview)
+vercel
+
+# Deploy (production)
+vercel --prod
+
+# Pull environment variables
+vercel env pull .env.local
+
+# View function logs
+vercel logs
+
+# Remove project
+vercel rm kiddies-town-portal</code></pre>
+
+<h3>Appendix B: Neon CLI Commands</h3>
+<pre><code># Install Neon CLI
+npm i -g neonctl
+
+# List projects
+neon projects list
+
+# Create connection string
+neon connection-string &lt;project-id&gt;</code></pre>
+
+<h3>Appendix C: Cost Estimate</h3>
+<table>
+  <tr><th>Service</th><th>Free Tier</th><th>Paid (Starting)</th></tr>
+  <tr><td>Vercel</td><td>100 GB bandwidth, 1000 build min</td><td>$20/mo (Pro)</td></tr>
+  <tr><td>Neon</td><td>0.5 GB storage, 24/7 compute</td><td>$19/mo (Launch)</td></tr>
+  <tr><td><strong>Total</strong></td><td><strong>$0/mo</strong></td><td><strong>$39/mo</strong></td></tr>
+</table>
+
+<hr>
+<p style="text-align:center; color:#999; font-size:9pt; margin-top:30px;">
+  Document generated for Kiddies Town ECD &amp; Academy Portal v2.0 — 26 August 2026
+</p>
+
+</body>
+</html>

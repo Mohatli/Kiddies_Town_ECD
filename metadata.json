@@ -1,0 +1,6 @@
+{
+  "name": "Kiddies Town Portal",
+  "description": "Comprehensive school management and parent engagement portal for Kiddies Town ECD and Academy.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

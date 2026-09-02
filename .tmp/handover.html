@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Kiddies Town ECD &amp; Academy — Official Handover Documentation</title>
+<style>
+  :root {
+    color-scheme: light;
+    --ink: #0f172a;
+    --body: #334155;
+    --muted: #64748b;
+    --line: #e2e8f0;
+    --indigo-deep: #1e1b4b;
+    --indigo: #4338ca;
+    --indigo-soft: #eef2ff;
+    --emerald: #059669;
+    --amber: #d97706;
+    --red: #dc2626;
+  }
+  * { box-sizing: border-box; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Segoe UI", "Inter", system-ui, Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.55;
+    color: var(--body);
+  }
+  .mono { font-family: Consolas, "JetBrains Mono", "Courier New", monospace; }
+
+  /* ---------- Cover ---------- */
+  .cover {
+    page-break-after: always;
+    height: 253mm;
+    display: flex;
+    flex-direction: column;
+  }
+  .cover-band {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 55%, #4338ca 100%);
+    border-radius: 6mm;
+    color: #fff;
+    padding: 16mm 14mm 12mm;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .cover-kicker {
+    letter-spacing: .28em; text-transform: uppercase; font-size: 9pt;
+    color: #c7d2fe; margin-bottom: 10mm; font-weight: 600;
+  }
+  .cover-title { font-size: 30pt; line-height: 1.15; font-weight: 700; margin: 0 0 4mm; }
+  .cover-sub { font-size: 13pt; color: #e0e7ff; font-weight: 400; max-width: 130mm; }
+  .cover-rule { width: 34mm; height: 1.6mm; background: #818cf8; border-radius: 1mm; margin: 10mm 0; }
+  .cover-desc { color: #c7d2fe; font-size: 10.5pt; max-width: 138mm; }
+  .cover-meta { margin-top: auto; display: flex; gap: 8mm; }
+  .meta-card {
+    background: rgba(255,255,255,.08); border: 1px solid rgba(199,210,254,.35);
+    border-radius: 3mm; padding: 5mm 6mm; min-width: 44mm;
+  }
+  .meta-card .k { font-size: 7.5pt; letter-spacing: .18em; text-transform: uppercase; color: #c7d2fe; }
+  .meta-card .v { font-size: 11.5pt; color: #fff; font-weight: 600; margin-top: 1.5mm; }
+  .cover-foot { text-align: center; color: var(--muted); font-size: 8.5pt; padding-top: 6mm; }
+
+  /* ---------- Headings ---------- */
+  h1.section {
+    page-break-before: always;
+    font-size: 19pt; color: var(--ink); font-weight: 700;
+    border-bottom: 2.5px solid var(--indigo);
+    padding-bottom: 3mm; margin: 0 0 6mm;
+  }
+  h1.first { page-break-before: avoid; }
+  h1.section .no { color: var(--indigo); margin-right: 4mm; }
+  h2 { font-size: 13pt; color: var(--ink); font-weight: 650; margin: 8mm 0 3mm; }
+  h3 { font-size: 11pt; color: var(--indigo); font-weight: 650; margin: 6mm 0 2.5mm; }
+  p { margin: 0 0 3mm; }
+  ul, ol { margin: 0 0 3mm; padding-left: 6mm; }
+  li { margin-bottom: 1.2mm; }
+  strong { color: var(--ink); }
+  a { color: var(--indigo); text-decoration: none; }
+
+  /* ---------- Tables ---------- */
+  table { width: 100%; border-collapse: collapse; margin: 2.5mm 0 4mm; font-size: 9.5pt; page-break-inside: avoid; }
+  th {
+    background: var(--indigo-deep); color: #fff; text-align: left;
+    padding: 2.4mm 3mm; font-size: 8.5pt; letter-spacing: .06em; text-transform: uppercase;
+  }
+  td { border-bottom: 1px solid var(--line); padding: 2.2mm 3mm; vertical-align: top; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  td code, p code, li code {
+    font-family: Consolas, "Courier New", monospace; font-size: 8.8pt;
+    background: var(--indigo-soft); color: #3730a3; padding: .4mm 1.4mm; border-radius: 1mm;
+  }
+
+  /* ---------- Callouts ---------- */
+  .callout {
+    border-left: 1.2mm solid var(--indigo); background: var(--indigo-soft);
+    border-radius: 0 2mm 2mm 0; padding: 3mm 4mm; margin: 3mm 0 4mm; font-size: 9.8pt;
+    page-break-inside: avoid;
+  }
+  .callout.warn { border-color: var(--amber); background: #fffbeb; }
+  .callout.danger { border-color: var(--red); background: #fef2f2; }
+  .callout.ok { border-color: var(--emerald); background: #ecfdf5; }
+  .callout b.tag { display: block; text-transform: uppercase; letter-spacing: .12em; font-size: 8pt; margin-bottom: 1mm; color: inherit; }
+  .callout.warn b.tag { color: #92400e; } .callout.danger b.tag { color: #991b1b; }
+  .callout.ok b.tag { color: #065f46; } .callout:not(.warn):not(.danger):not(.ok) b.tag { color: var(--indigo); }
+
+  /* ---------- Misc blocks ---------- */
+  .pill {
+    display: inline-block; font-size: 8pt; font-weight: 600; letter-spacing: .05em;
+    padding: .6mm 2.4mm; border-radius: 5mm; text-transform: uppercase;
+  }
+  .pill.g { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+  .pill.a { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+  .pill.r { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+  .pill.i { background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; }
+
+  pre.code {
+    background: #0f172a; color: #e2e8f0; border-radius: 2.5mm;
+    padding: 4mm 5mm; font-size: 8.8pt; line-height: 1.5;
+    font-family: Consolas, "Courier New", monospace;
+    white-space: pre-wrap; page-break-inside: avoid; margin: 2.5mm 0 4mm;
+  }
+  pre.code .c { color: #94a3b8; }
+
+  /* ---------- TOC ---------- */
+  .toc { list-style: none; padding: 0; margin: 4mm 0; }
+  .toc li { margin: 0; border-bottom: 1px dotted #cbd5e1; padding: 2mm 0; font-size: 11pt; }
+  .toc li a { display: flex; justify-content: space-between; color: var(--ink); font-weight: 500; }
+  .toc li .no { color: var(--indigo); font-weight: 700; width: 12mm; display: inline-block; }
+  .toc li.sub { padding-left: 12mm; font-size: 10pt; border-bottom-color: #eef2f7; }
+  .toc li.sub a { font-weight: 400; color: var(--body); }
+
+  /* ---------- Sign-off ---------- */
+  .sig-grid { display: flex; gap: 8mm; margin-top: 10mm; }
+  .sig-box { flex: 1; border: 1px solid var(--line); border-radius: 2.5mm; padding: 5mm 6mm 8mm; }
+  .sig-box .role { font-size: 8pt; letter-spacing: .16em; text-transform: uppercase; color: var(--indigo); font-weight: 700; }
+  .sig-line { border-bottom: 1px solid var(--ink); height: 14mm; margin-top: 6mm; }
+  .sig-cap { font-size: 8.5pt; color: var(--muted); margin-top: 1.6mm; }
+
+  .feature-grid { display: flex; flex-wrap: wrap; gap: 3mm; margin: 3mm 0 4mm; }
+  .feature-card { flex: 1 1 44%; border: 1px solid var(--line); border-radius: 2.5mm; padding: 4mm 4.5mm; page-break-inside: avoid; background: #fbfcfe; }
+  .feature-card h4 { margin: 0 0 1.5mm; font-size: 10.5pt; color: var(--ink); }
+  .feature-card p { margin: 0; font-size: 9.3pt; color: var(--muted); }
+
+  .step-list { counter-reset: step; list-style: none; padding: 0; margin: 3mm 0 4mm; }
+  .step-list li { counter-increment: step; position: relative; padding: 0 0 3mm 11mm; }
+  .step-list li::before {
+    content: counter(step); position: absolute; left: 0; top: 0;
+    width: 7mm; height: 7mm; border-radius: 50%;
+    background: var(--indigo-deep); color: #fff; font-size: 9pt; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .two-col { column-count: 2; column-gap: 8mm; }
+</style>
+</head>
+<body>
+
+<!-- ================= COVER ================= -->
+<div class="cover">
+  <div class="cover-band">
+    <div class="cover-kicker">Official Project Handover &middot; Confidential</div>
+    <h1 class="cover-title">Kiddies Town ECD&nbsp;&amp;&nbsp;Academy<br>Management Portal</h1>
+    <div class="cover-sub">Complete System Handover Documentation — Operations, Administration &amp; Technical Reference</div>
+    <div class="cover-rule"></div>
+    <p class="cover-desc">
+      This document constitutes the complete and final handover pack for the Kiddies Town
+      ECD &amp; Academy web portal. It covers day-to-day operation of all three portals,
+      administrative controls, the technical architecture, database schema, API reference,
+      security and POPIA compliance posture, and maintenance guidance for the receiving party.
+    </p>
+    <div class="cover-meta">
+      <div class="meta-card"><div class="k">Document</div><div class="v">Handover Pack v1.0</div></div>
+      <div class="meta-card"><div class="k">Date</div><div class="v">22 August 2026</div></div>
+      <div class="meta-card"><div class="k">Status</div><div class="v">Final — For Acceptance</div></div>
+      <div class="meta-card"><div class="k">System Ver.</div><div class="v">API v2.0.0</div></div>
+    </div>
+  </div>
+  <div class="cover-foot">Kiddies Town ECD &amp; Academy &middot; Early Childhood Development Management Platform</div>
+</div>
+
+<!-- ================= DOCUMENT CONTROL ================= -->
+<h1 class="section first" id="control"><span class="no">&#9632;</span>Document Control &amp; Acceptance</h1>
+
+<table>
+  <tr><th style="width:32%">Attribute</th><th>Detail</th></tr>
+  <tr><td><strong>Project</strong></td><td>Kiddies Town ECD &amp; Academy — Web Management Portal (internal name: <code>kiddies-town-portal</code>)</td></tr>
+  <tr><td><strong>Description</strong></td><td>Full-stack early childhood development management platform serving Parents, Teachers, and the Principal/Administrator</td></tr>
+  <tr><td><strong>Version</strong></td><td>Handover Pack v1.0 &middot; System API v2.0.0</td></tr>
+  <tr><td><strong>Date of handover</strong></td><td>22 August 2026</td></tr>
+  <tr><td><strong>Classification</strong></td><td><span class="pill r">Confidential — Client Only</span></td></tr>
+  <tr><td><strong>Deliverables included</strong></td><td>Complete source code, production build (<code>dist/</code>), this documentation pack, demo walkthrough video (<code>kiddies-town-walkthrough.mp4</code>), developmental guide PDF template, environment template (<code>.env.example</code>)</td></tr>
+</table>
+
+<div class="callout danger">
+  <b class="tag">Confidentiality Notice</b>
+  This document contains system credentials, security architecture details, and references to learner data
+  structures. It is provided solely for the named receiving party of the Kiddies Town ECD &amp; Academy portal and
+  must be stored securely in line with the Protection of Personal Information Act (POPIA), Act 4 of 2013.
+</div>
+
+<h2>Acceptance &amp; Sign-Off</h2>
+<p>By signing below, the receiving party confirms receipt of the deliverables listed above, has been granted
+the administrative credentials set out in Section&nbsp;4, and accepts the system in its documented state,
+including the known limitations recorded in Section&nbsp;10.</p>
+
+<div class="sig-grid">
+  <div class="sig-box">
+    <div class="role">Prepared By — Service Provider</div>
+    <div class="sig-line"></div>
+    <div class="sig-cap">Name &amp; Signature</div>
+    <div class="sig-line"></div>
+    <div class="sig-cap">Date</div>
+  </div>
+  <div class="sig-box">
+    <div class="role">Accepted By — Kiddies Town Client Representative</div>
+    <div class="sig-line"></div>
+    <div class="sig-cap">Name &amp; Signature</div>
+    <div class="sig-line"></div>
+    <div class="sig-cap">Date</div>
+  </div>
+</div>
+
+<!-- ================= TOC ================= -->
+<h1 class="section" id="toc"><span class="no">&#9632;</span>Table of Contents</h1>
+<ul class="toc">
+  <li><a href="#exec"><span><span class="no">1</span>Executive Overview</span></a></li>
+  <li><a href="#features"><span><span class="no">2</span>System Capabilities Summary</span></a></li>
+  <li><a href="#userguide"><span><span class="no">3</span>User Guide</span></a></li>
+  <li class="sub"><a href="#access">3.1 &nbsp;Accessing the System &amp; Signing In</a></li>
+  <li class="sub"><a href="#parent">3.2 &nbsp;Parent Hub</a></li>
+  <li class="sub"><a href="#teacher">3.3 &nbsp;Teacher Console</a></li>
+  <li class="sub"><a href="#admin">3.4 &nbsp;Principal Admin Center</a></li>
+  <li class="sub"><a href="#enrolment">3.5 &nbsp;Online Enrolment Wizard</a></li>
+  <li><a href="#ops"><span><span class="no">4</span>Administration &amp; Operations Guide</span></a></li>
+  <li><a href="#arch"><span><span class="no">5</span>Technical Architecture</span></a></li>
+  <li><a href="#db"><span><span class="no">6</span>Database Schema</span></a></li>
+  <li><a href="#api"><span><span class="no">7</span>API Reference</span></a></li>
+  <li><a href="#env"><span><span class="no">8</span>Environment Configuration &amp; Deployment</span></a></li>
+  <li><a href="#security"><span><span class="no">9</span>Security &amp; POPIA Compliance</span></a></li>
+  <li><a href="#limits"><span><span class="no">10</span>Known Limitations &amp; Handover Notes</span></a></li>
+  <li><a href="#support"><span><span class="no">11</span>Support, Maintenance &amp; Recommendations</span></a></li>
+</ul>
+
+<!-- ================= 1 EXEC ================= -->
+<h1 class="section" id="exec"><span class="no">1</span>Executive Overview</h1>
+
+<p>The Kiddies Town ECD &amp; Academy Portal is a custom-built, fully responsive web application that digitises the
+core operations of the school. It replaces ad-hoc paper registers, verbal updates, and scattered messaging with a
+single secure platform that serves three audiences through dedicated portals:</p>
+
+<ul>
+  <li><strong>Parents</strong> — real-time visibility of their child's attendance, weekly learning themes, progress
+      reports, fee statements and receipts, school events with RSVP, and a direct messaging channel to staff.</li>
+  <li><strong>Teachers</strong> — daily attendance capture, milestone and progress assessment across ten developmental
+      indicators, classroom journal publishing, theme planning, and parent communication.</li>
+  <li><strong>The Principal / Administrator</strong> — centralised oversight of enrolments, learners, staff, transport
+      routes, medical profiles, finances, bulk parent communications, emergency broadcasts, and a full audit trail.</li>
+</ul>
+
+<p>The platform is built on a modern, widely supported technology stack (React, TypeScript, Node.js/Express, PostgreSQL)
+that is inexpensive to host and straightforward for any competent web developer to maintain. Data protection is a
+first-class concern: access is role-restricted, passwords are cryptographically hashed, every significant write action
+is recorded in an audit log, and data structures were designed around South Africa's POPIA obligations.</p>
+
+<div class="callout ok">
+  <b class="tag">Business Value at a Glance</b>
+  One system for enrolment &rarr; attendance &rarr; assessment &rarr; reporting &rarr; billing &rarr; communication.
+  Parents self-serve routine questions; teachers capture evidence once; the principal sees live school-wide statistics
+  without compiling spreadsheets.
+</div>
+
+<h2>In Scope of This Handover</h2>
+<ul>
+  <li>All three dashboards plus the public landing page and online enrolment wizard.</li>
+  <li>REST API (v2) with authentication, role-based access control, validation, rate limiting, and audit logging.</li>
+  <li>Database schema (PostgreSQL / Neon serverless) with a local JSON-file fallback mode for demonstrations.</li>
+  <li>Dynamically generated PDF documents (parent developmental guide).</li>
+  <li>Source code repository layout, build pipeline, deployment procedure, and operational runbook.</li>
+</ul>
+
+<h2>Out of Scope</h2>
+<ul>
+  <li>Payment gateway integration (payments are currently captured as ledger records/receipts; no card acquiring).</li>
+  <li>Automated off-site backups and monitoring/alerting services (recommendations in Section&nbsp;11).</li>
+  <li>Content such as photographs, policies, and fee values — these remain editable data owned by the school.</li>
+</ul>
+
+<!-- ================= 2 FEATURES ================= -->
+<h1 class="section" id="features"><span class="no">2</span>System Capabilities Summary</h1>
+
+<div class="feature-grid">
+  <div class="feature-card"><h4>Brand Landing Page</h4><p>Premium public showcase with program hero galleries, filterable photography sliders, and an information grid covering compliance, billing buffers, milestones, and CBD shuttle pick-ups.</p></div>
+  <div class="feature-card"><h4>Parent Hub</h4><p>Child attendance history, visual weekly schedules and themes, fee notices and payment receipts, teacher chat, event calendar with RSVP, and downloadable progress reports.</p></div>
+  <div class="feature-card"><h4>Teacher Console</h4><p>Attendance tracker, milestone assessments across ten developmental indicators (social-emotional, fine motor, literacy, numeracy, etc.), journal editor, theme manager, and direct parent messaging.</p></div>
+  <div class="feature-card"><h4>Principal Admin Center</h4><p>School-wide statistics, student directory, staff roster, calendar manager, transport route manager, medical profiles, bulk email and arrears notices, audit log viewer, and database reset utility.</p></div>
+  <div class="feature-card"><h4>Online Enrolment Wizard</h4><p>Six-step validated application form: child particulars, parent details, medical profile, transport needs, POPIA consents, and document upload — feeding directly into the admin enrolment pipeline.</p></div>
+  <div class="feature-card"><h4>Dynamic PDF Generation</h4><p>Server-compiled, high-fidelity PDF documents via pdfkit, including the downloadable ECD Developmental Guide for parents.</p></div>
+  <div class="feature-card"><h4>Secure Authentication</h4><p>Email + password + role login with JWT access tokens (15 min) and refresh tokens (7 days), bcrypt password hashing, brute-force rate limiting, and role-matched endpoint guards.</p></div>
+  <div class="feature-card"><h4>Audit Trail</h4><p>Every significant write operation is attributed to the acting user and inspectable in the Admin Center's Audit Log Viewer.</p></div>
+</div>
+
+<h2>Class Groups</h2>
+<p>Learners are organised into three class groups, configurable as a database enum:
+<span class="pill i">Roses</span> <span class="pill i">Giraffes</span> <span class="pill i">Tigers</span></p>
+
+<!-- ================= 3 USER GUIDE ================= -->
+<h1 class="section" id="userguide"><span class="no">3</span>User Guide</h1>
+
+<h2 id="access">3.1 &nbsp;Accessing the System &amp; Signing In</h2>
+<ol class="step-list">
+  <li>Open the portal address in any modern browser (Chrome, Edge, Firefox, Safari — desktop or mobile). The landing page is public.</li>
+  <li>Select <strong>Login</strong> and enter your school email address and password.</li>
+  <li>Select the profile/role you are signing in as (Parent, Teacher, or Principal/Admin). The role must match the account's assigned role or sign-in is refused.</li>
+  <li>You are taken straight to your role's dashboard. Sessions expire after 15 minutes of token lifetime; the app renews automatically while in use.</li>
+</ol>
+<div class="callout">
+  <b class="tag">Password Guidance</b>
+  On first production use, each seeded account holder should change their temporary password immediately
+  (see Section&nbsp;4 for the seeded credential list). Passwords are never displayed by the system to anyone,
+  including administrators.
+</div>
+
+<h2 id="parent">3.2 &nbsp;Parent Hub</h2>
+<table>
+  <tr><th style="width:26%">Module</th><th>What it does</th></tr>
+  <tr><td><strong>Attendance View</strong></td><td>Daily arrival status and attendance history per enrolled child.</td></tr>
+  <tr><td><strong>Weekly Themes</strong></td><td>The current classroom theme, description and activities so parents can reinforce learning at home.</td></tr>
+  <tr><td><strong>Progress Reports</strong></td><td>Milestone scorecards across ten developmental indicators with teacher comments; released terms become visible here and can be downloaded/printed.</td></tr>
+  <tr><td><strong>Payment History</strong></td><td>Fee ledger, invoice status flags, and school reference codes with receipt numbers.</td></tr>
+  <tr><td><strong>Event Calendar</strong></td><td>School events and concerts with category filters and one-click RSVP.</td></tr>
+  <tr><td><strong>Chat Portal</strong></td><td>Direct, logged message channel between the family and the school.</td></tr>
+</table>
+
+<h2 id="teacher">3.3 &nbsp;Teacher Console</h2>
+<table>
+  <tr><th style="width:26%">Module</th><th>What it does</th></tr>
+  <tr><td><strong>Attendance Tracker</strong></td><td>Capture the daily register per class group; statuses feed straight into parent views.</td></tr>
+  <tr><td><strong>Milestone Tracker &amp; Progress Editor</strong></td><td>Grade each child across ten developmental indicators (social-emotional, fine motor, gross motor, literacy, numeracy, etc.), add comments, and release term reports to parents.</td></tr>
+  <tr><td><strong>Journal Editor</strong></td><td>Publish weekly classroom highlights visible to parents.</td></tr>
+  <tr><td><strong>Theme Manager</strong></td><td>Create/edit the weekly learning themes and activity lists shown to parents.</td></tr>
+  <tr><td><strong>Teacher Chat</strong></td><td>Two-way messaging with parents from within the console.</td></tr>
+</table>
+
+<h2 id="admin">3.4 &nbsp;Principal Admin Center</h2>
+<table>
+  <tr><th style="width:26%">Module</th><th>What it does</th></tr>
+  <tr><td><strong>Overview Statistics</strong></td><td>Live counters: enrolled learners, pending applications, tuition statistics, attendance snapshot.</td></tr>
+  <tr><td><strong>Enrolment Pipeline</strong></td><td>Review applications submitted via the wizard, track step/status, approve or decline — approval provisions the learner record.</td></tr>
+  <tr><td><strong>Student Directory</strong></td><td>All learners with class grouping, guardian links, and profile cards; create/update/delete (delete is admin-only).</td></tr>
+  <tr><td><strong>Staff Roster</strong></td><td>Teacher and staff listing.</td></tr>
+  <tr><td><strong>Calendar Manager</strong></td><td>Create and manage school events (categories: concerts, meetings, outings, closures…).</td></tr>
+  <tr><td><strong>Transport Manager</strong></td><td>Manage CBD shuttle routes and learner allocations via route modals.</td></tr>
+  <tr><td><strong>Medical Profiles</strong></td><td>View/edit sensitive medical details under restricted admin access.</td></tr>
+  <tr><td><strong>Bulk Email &amp; Arrears Notices</strong></td><td>Send announcements to parent groups or targeted arrears reminder notices.</td></tr>
+  <tr><td><strong>Audit Log Viewer</strong></td><td>Searchable trail of who did what and when (user email, action, payload, timestamp).</td></tr>
+  <tr><td><strong>Payments Ledger</strong></td><td>Record payments against learners; receipts are numbered automatically.</td></tr>
+  <tr><td><strong>Database Reset Utility</strong></td><td>Restores demonstration seed data (see Section&nbsp;4.3). <em>Use with care in production.</em></td></tr>
+</table>
+
+<h2 id="enrolment">3.5 &nbsp;Online Enrolment Wizard</h2>
+<p>Public-facing, no login required. Applications proceed through six validated steps:</p>
+<ol class="step-list">
+  <li><strong>Child Particulars</strong> — names, date of birth, ID number, gender, home language, religion, requested grade/class.</li>
+  <li><strong>Parent Details</strong> — contacts, addresses, marital status, guardianship ("child lives with").</li>
+  <li><strong>Medical Profile</strong> — allergies, conditions, medication, doctor details.</li>
+  <li><strong>Transport Details</strong> — shuttle/CBD pick-up requirements.</li>
+  <li><strong>Consents</strong> — POPIA information-processing consents and school policy acceptance.</li>
+  <li><strong>Document Upload</strong> — supporting documents (birth records, immunisation cards, etc.).</li>
+</ol>
+<p>Every step is validated inline before progression; incomplete submissions cannot advance. Submitted applications
+appear instantly in the Principal Admin Center's enrolment pipeline with a reference status.</p>
+
+<!-- ================= 4 OPS ================= -->
+<h1 class="section" id="ops"><span class="no">4</span>Administration &amp; Operations Guide</h1>
+
+<h2>4.1 &nbsp;Seeded Accounts (Demo Credentials)</h2>
+<p>The following accounts are provisioned automatically when the system initialises. They are intended for immediate
+post-handover access and training. <strong>Change these passwords before going live with real learner data</strong>
+(Section&nbsp;11, item&nbsp;1).</p>
+
+<table>
+  <tr><th>Role</th><th>Email Address</th><th>Password</th><th>Account Holder</th></tr>
+  <tr><td><span class="pill g">Parent</span></td><td><code>parent@kiddiestown.co.za</code></td><td><code>parent</code></td><td>Sarah Mbeki</td></tr>
+  <tr><td><span class="pill a">Teacher</span></td><td><code>teacher@kiddiestown.co.za</code></td><td><code>teacher</code></td><td>Teacher Anne</td></tr>
+  <tr><td><span class="pill r">Admin</span></td><td><code>admin@kiddiestown.co.za</code></td><td><code>admin</code></td><td>Shineon M.</td></tr>
+</table>
+
+<div class="callout warn">
+  <b class="tag">Important</b>
+  These bootstrap passwords are simple by design for handover training. They are stored hashed (bcrypt), but must be
+  replaced before the system holds real personal information. New parent accounts can be created by admins via
+  <code>POST /api/admin/create-parent</code> or by public signup at the registration screen.
+</div>
+
+<p>The seed also includes two demo learners (Jake &amp; Jill Mbeki) linked to the parent account so that every screen
+has realistic content during orientation.</p>
+
+<h2>4.2 &nbsp;Daily Operational Notes</h2>
+<ul>
+  <li><strong>Teachers</strong> should complete the attendance register each morning; parents see the update live.</li>
+  <li><strong>Progress reports</strong> are drafted per term and only visible to parents once marked <em>released</em>.</li>
+  <li><strong>Bulk emails</strong> require a configured mail provider key if enabled in the hosting environment; confirm delivery settings before relying on them for emergencies.</li>
+  <li><strong>Emergency broadcasts</strong> use the same bulk-email channel — test quarterly.</li>
+</ul>
+
+<h2>4.3 &nbsp;Resetting Demonstration Data</h2>
+<p>For open days, training, or returning the system to a clean state, the administrator can reset all tables back to
+seed content:</p>
+<pre class="code">POST /api/admin/reset-db        <span class="c"># requires Admin JWT; wipes current data and re-seeds mock content</span></pre>
+<div class="callout danger">
+  <b class="tag">Destructive Action</b>
+  In production with a live database this erases real records. Take a backup first (Section&nbsp;11, item&nbsp;2)
+  and restrict knowledge of this capability to the principal and the technical maintainer.
+</div>
+
+<h2>4.4 &nbsp;Health Check</h2>
+<p>Hosting monitors can poll the unauthenticated health endpoint to confirm the service is alive:</p>
+<pre class="code">GET /api/health        <span class="c"># returns version 2.0.0 and uptime status</span></pre>
+
+<!-- ================= 5 ARCHITECTURE ================= -->
+<h1 class="section" id="arch"><span class="no">5</span>Technical Architecture</h1>
+
+<h2>5.1 &nbsp;Stack Overview</h2>
+<table>
+  <tr><th style="width:30%">Layer</th><th>Technology</th></tr>
+  <tr><td>Frontend framework</td><td>React 19 + TypeScript 5.8, React Router 7 (lazy-loaded, role-protected routes)</td></tr>
+  <tr><td>Styling</td><td>Tailwind CSS 4 with premium design tokens (Outfit / Inter / JetBrains Mono typography)</td></tr>
+  <tr><td>Client state</td><td>Zustand (auth/session store), TanStack React Query (server data)</td></tr>
+  <tr><td>Forms &amp; validation</td><td>react-hook-form + Zod schemas shared conceptually with the server</td></tr>
+  <tr><td>Backend</td><td>Node.js + Express 4 (modular: config / controllers / middleware / routes/v1 / schemas / db / utils)</td></tr>
+  <tr><td>Security middleware</td><td>helmet, CORS allow-list, compression, express-rate-limit, JSON Web Tokens, bcryptjs (cost 12)</td></tr>
+  <tr><td>Database</td><td>PostgreSQL via Neon serverless driver + Drizzle ORM (typed queries &amp; migrations)</td></tr>
+  <tr><td>Fallback store</td><td>Local JSON file (<code>data_store.json</code>) when no <code>DATABASE_URL</code> is configured</td></tr>
+  <tr><td>PDF engine</td><td>pdfkit (server-side document compilation)</td></tr>
+  <tr><td>Logging</td><td>pino (+ pino-pretty in development)</td></tr>
+  <tr><td>Build tooling</td><td>Vite 6 (client bundle), esbuild (server bundle to <code>dist/server.mjs</code>)</td></tr>
+  <tr><td>AI integration (optional)</td><td>@google/genai (Gemini) used by the pitch/demo console when <code>GEMINI_API_KEY</code> is present</td></tr>
+</table>
+
+<h2>5.2 &nbsp;Repository Layout</h2>
+<pre class="code">├── server/                  <span class="c"># CURRENT modular backend (entry: server/index.ts → app.ts)</span>
+│   ├── config/  controllers/  middleware/  routes/v1/  schemas/  db/  utils/
+├── server.ts                <span class="c"># LEGACY single-file backend — kept for reference only</span>
+├── src/
+│   ├── app/router.tsx       <span class="c"># routes: / , /login , /enrol (public); /admin /parent /teacher (guarded)</span>
+│   ├── features/            <span class="c"># landing, auth, admin, parent, teacher, enrollment pages</span>
+│   ├── components/          <span class="c"># ui primitives + admin/ teacher/ parent/ enrollment/ modules</span>
+│   ├── stores/authStore.ts  <span class="c"># session state (localStorage keys kt_session_token, kt_logged_in_user)</span>
+│   └── types.ts             <span class="c"># shared domain types & academic scoring enums</span>
+├── scripts/
+│   ├── dev.mjs              <span class="c"># dev launcher (esbuild → .tmp/server.mjs, then plain node)</span>
+│   ├── e2e-test.mjs         <span class="c"># Playwright end-to-end smoke tests</span>
+│   └── record-tour.mjs      <span class="c"># records the client walkthrough video</span>
+├── presentation/            <span class="c"># handover artifacts (walkthrough video, guide PDF)</span>
+├── dist/                    <span class="c"># production build output (client + server.mjs)</span>
+└── .env.example             <span class="c"># environment variable template</span></pre>
+
+<h2>5.3 &nbsp;Authentication Flow</h2>
+<ol class="step-list">
+  <li>User submits email + password + selected role to <code>POST /api/auth/login</code>. The role must match the stored account role.</li>
+  <li>Password verified against its bcrypt hash (cost factor 12). A legacy plaintext-comparison fallback exists in the login path for pre-migration accounts (flagged in Section&nbsp;10).</li>
+  <li>Server issues a signed HS256 <strong>access token</strong> (15&nbsp;min, issuer <code>kiddies-town</code>, secret <code>JWT_SECRET</code>) and a <strong>refresh token</strong> (7&nbsp;days, secret <code>JWT_REFRESH_SECRET</code>). Both are returned in the JSON response body.</li>
+  <li>The client keeps the access token in browser localStorage and attaches it as a <code>Bearer</code> header. The refresh token is not persisted client-side; renewal uses <code>POST /api/auth/refresh-token</code>.</li>
+  <li>Each protected request passes <code>requireAuth()</code>; write endpoints additionally pass <code>requireRole('parent'|'teacher'|'admin')</code>. Unauthenticated visitors receive read-only guest data (public themes, events, journal only).</li>
+</ol>
+
+<h2>5.4 &nbsp;Request Pipeline (middleware order)</h2>
+<pre class="code">helmet (security headers; CSP relaxed in dev)
+→ CORS allow-list (credentials, CORS_ORIGIN)
+→ compression
+→ body parsing (JSON & urlencoded, 10 MB limit)
+→ rate limiting (general API: 100 req / 15 min · auth endpoints: 10 req / 15 min)
+→ JWT bearer authentication (optional guest fallback, role 'guest')
+→ RBAC role guard (per-route)
+→ Zod schema validation (request bodies)
+→ audit-log middleware (records writes)
+→ route handlers → central error handler (always last)</pre>
+
+<h2>5.5 &nbsp;Data Modes</h2>
+<ul>
+  <li><strong>Cloud mode</strong> — when <code>DATABASE_URL</code> is set, the server connects to PostgreSQL (Neon),
+      bootstraps all tables/enums on start-up, and seeds baseline content if empty. This is the production mode.</li>
+  <li><strong>Local file mode</strong> — without <code>DATABASE_URL</code>, all reads/writes map to
+      <code>data_store.json</code>, seeded from mock data. Ideal for demos/training on a laptop; not sized for
+      production volume. The file contains PII and is git-ignored by policy.</li>
+</ul>
+
+<!-- ================= 6 DB ================= -->
+<h1 class="section" id="db"><span class="no">6</span>Database Schema</h1>
+<p>Schema is defined in <code>server/db/schema.ts</code> using Drizzle ORM. Eight PostgreSQL enums provide
+referential safety: <code>role</code>, <code>gender</code>, <code>class_type</code>,
+<code>attendance_status</code>, <code>payment_status</code>, <code>sender</code>,
+<code>event_category</code>, <code>enrolment_status</code>. Indexes exist on e-mail, status and date columns.</p>
+
+<table>
+  <tr><th style="width:22%">Table</th><th>Purpose &amp; Key Columns</th></tr>
+  <tr><td><code>kt_users</code></td><td>Portal accounts. Email (primary key), name, bcrypt <code>password_hash</code>, <code>role</code> enum, creation timestamp.</td></tr>
+  <tr><td><code>kt_learners</code></td><td>Learner records: full names, DOB, ID number, gender, language, religion, grade/school, <code>class_type</code>, attendance status &amp; arrival time, guardian email, enrolment approval flag, transport allocation fields.</td></tr>
+  <tr><td><code>kt_parent_profile</code></td><td>Guardian profile: contacts, physical address, marital status, "child lives with", mother/father details (JSONB), emergency contact, POPIA consent markers.</td></tr>
+  <tr><td><code>kt_progress_reports</code></td><td>Term scorecards: learner, year, term, released flag, days absent, ten-indicator scores (JSONB), teacher comments.</td></tr>
+  <tr><td><code>kt_payments</code></td><td>Fee ledger: description, date, amount, <code>payment_status</code>, receipt number, parent email, learner link.</td></tr>
+  <tr><td><code>kt_chats</code></td><td>Parent–school messages: sender enum, sender name, text, timestamp, parent email thread key.</td></tr>
+  <tr><td><code>kt_weekly_themes</code></td><td>Curriculum themes: week number (PK), title, description, activities (JSONB).</td></tr>
+  <tr><td><code>kt_school_events</code></td><td>Events: title, date, time, <code>event_category</code>, RSVP list (JSONB).</td></tr>
+  <tr><td><code>kt_journal_posts</code></td><td>Weekly classroom highlight entries published by teachers.</td></tr>
+  <tr><td><code>kt_enrolments</code></td><td>Wizard applications: five JSONB step payloads (child, parent, medical, transport, consents), current step, <code>enrolment_status</code>, date applied.</td></tr>
+  <tr><td><code>kt_audit_logs</code></td><td>Immutable activity trail: user email, action, request payload (JSONB), timestamp.</td></tr>
+</table>
+
+<div class="callout">
+  <b class="tag">Schema Changes</b>
+  Apply changes through Drizzle Kit (<code>drizzle.config.ts</code>) rather than editing the live database directly,
+  so that the typed ORM layer, enums, and bootstrap seeder stay in sync.
+</div>
+
+<!-- ================= 7 API ================= -->
+<h1 class="section" id="api"><span class="no">7</span>API Reference</h1>
+<p>All routes are mounted under both <code>/api/v1</code> and <code>/api</code> (backward compatibility).
+Unless marked <em>public</em>, requests require a <code>Bearer</code> access token; role requirements are noted.
+Bodies are JSON and validated with Zod.</p>
+
+<h2>7.1 &nbsp;Authentication</h2>
+<table>
+  <tr><th style="width:34%">Endpoint</th><th style="width:14%">Access</th><th>Description</th></tr>
+  <tr><td><code>POST /auth/signup</code></td><td>Public</td><td>Register a parent/teacher/admin profile. Parent registrations are auto-provisioned with demo children, starting milestones and sample fee ledgers for instant onboarding.</td></tr>
+  <tr><td><code>POST /auth/login</code></td><td>Public (rate-limited 10/15&nbsp;min)</td><td>Returns access + refresh tokens; selected role must match account role.</td></tr>
+  <tr><td><code>POST /auth/refresh-token</code></td><td>Refresh token</td><td>Exchanges a valid refresh token for a new access token.</td></tr>
+</table>
+
+<h2>7.2 &nbsp;Data Retrieval</h2>
+<table>
+  <tr><th style="width:34%">Endpoint</th><th style="width:14%">Access</th><th>Description</th></tr>
+  <tr><td><code>GET /data</code></td><td>Any (guest fallback)</td><td>Combined dashboard feed filtered to the caller's role; guests receive only public themes/events/journal.</td></tr>
+  <tr><td><code>GET /all-data</code></td><td>Any</td><td>Legacy alias of <code>/data</code>.</td></tr>
+  <tr><td><code>GET /health</code></td><td>Public</td><td>Service health probe (v2.0.0).</td></tr>
+</table>
+
+<h2>7.3 &nbsp;Resource Writes</h2>
+<table>
+  <tr><th style="width:34%">Endpoint</th><th style="width:20%">Roles</th><th>Description</th></tr>
+  <tr><td><code>POST /learners</code></td><td>admin · teacher · parent</td><td>Create/update learner records.</td></tr>
+  <tr><td><code>DELETE /learners/:id</code></td><td>admin</td><td>Remove a learner record.</td></tr>
+  <tr><td><code>POST /parent-profile</code></td><td>parent · admin</td><td>Update guardian profile &amp; consents.</td></tr>
+  <tr><td><code>POST /progress-reports</code></td><td>admin · teacher</td><td>Save/release milestone scorecards.</td></tr>
+  <tr><td><code>POST /payments</code></td><td>admin · parent</td><td>Capture fee ledger entries/receipts.</td></tr>
+  <tr><td><code>POST /chats</code></td><td>all roles</td><td>Post a message to a parent–school thread.</td></tr>
+  <tr><td><code>POST /events</code></td><td>admin · teacher</td><td>Create school events.</td></tr>
+  <tr><td><code>POST /themes</code></td><td>admin · teacher</td><td>Publish weekly learning themes.</td></tr>
+  <tr><td><code>POST /journal</code></td><td>admin · teacher</td><td>Publish classroom journal posts.</td></tr>
+  <tr><td><code>POST /enrolments</code></td><td>admin · parent</td><td>Submit/update wizard applications.</td></tr>
+</table>
+
+<h2>7.4 &nbsp;Admin Operations</h2>
+<table>
+  <tr><th style="width:34%">Endpoint</th><th style="width:10%">Roles</th><th>Description</th></tr>
+  <tr><td><code>POST /admin/create-parent</code></td><td>admin</td><td>Provision a new parent account.</td></tr>
+  <tr><td><code>POST /admin/send-bulk-emails</code></td><td>admin</td><td>Announcement broadcast to parent groups.</td></tr>
+  <tr><td><code>POST /admin/send-arrears-notice</code></td><td>admin</td><td>Targeted fee-arrears reminders.</td></tr>
+  <tr><td><code>GET /admin/audit-logs</code></td><td>admin</td><td>Paged audit trail query.</td></tr>
+  <tr><td><code>POST /admin/reset-db</code></td><td>admin</td><td>Destructive re-seed to demonstration state (§4.3).</td></tr>
+</table>
+
+<h2>7.5 &nbsp;Documents</h2>
+<table>
+  <tr><th style="width:34%">Endpoint</th><th style="width:10%">Roles</th><th>Description</th></tr>
+  <tr><td><code>GET /pdf/guide</code></td><td>Authenticated</td><td>Streams the dynamically compiled ECD developmental guide PDF (pdfkit).</td></tr>
+</table>
+
+<!-- ================= 8 ENV ================= -->
+<h1 class="section" id="env"><span class="no">8</span>Environment Configuration &amp; Deployment</h1>
+
+<h2>8.1 &nbsp;Environment Variables</h2>
+<table>
+  <tr><th style="width:26%">Variable</th><th style="width:14%">Required</th><th>Purpose</th></tr>
+  <tr><td><code>JWT_SECRET</code></td><td><span class="pill r">Required</span></td><td>Signing key for access tokens. Minimum 32 characters; generate with <code>node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"</code>.</td></tr>
+  <tr><td><code>JWT_REFRESH_SECRET</code></td><td><span class="pill r">Required</span></td><td>Signing key for refresh tokens (same generation method).</td></tr>
+  <tr><td><code>DATABASE_URL</code></td><td><span class="pill a">Optional</span></td><td>Neon PostgreSQL connection string. Omitted ⇒ local JSON-file mode (demos only).</td></tr>
+  <tr><td><code>PORT</code></td><td><span class="pill a">Optional</span></td><td>Listen port (default <b>3000</b>).</td></tr>
+  <tr><td><code>NODE_ENV</code></td><td><span class="pill a">Optional</span></td><td><code>development | production | test</code>. Production serves the built client from <code>dist/</code>.</td></tr>
+  <tr><td><code>CORS_ORIGIN</code></td><td><span class="pill a">Optional</span></td><td>Allowed browser origin (default <code>http://localhost:3000</code>). Set to the public domain in production.</td></tr>
+  <tr><td><code>GEMINI_API_KEY</code></td><td><span class="pill a">Optional</span></td><td>Google Gemini key for the AI pitch/demo console.</td></tr>
+  <tr><td><code>APP_URL</code></td><td><span class="pill a">Optional</span></td><td>Public URL of the hosted app (used in generated content).</td></tr>
+</table>
+<p>Copy <code>.env.example</code> to <code>.env</code> and complete it. Never commit <code>.env</code>;
+it is excluded by <code>.gitignore</code>.</p>
+
+<h2>8.2 &nbsp;Commands</h2>
+<pre class="code">npm install       <span class="c"># install dependencies</span>
+npm run dev       <span class="c"># development server on port 3000 (hot reload; esbuild → .tmp/server.mjs + Vite middleware)</span>
+npm run lint      <span class="c"># TypeScript diagnostics (tsc --noEmit)</span>
+npm run build     <span class="c"># production build: Vite client bundle + esbuild server bundle (dist/server.mjs)</span>
+npm start         <span class="c"># run the compiled production build (serves API + built client on PORT)</span>
+npm run clean     <span class="c"># remove build artifacts</span></pre>
+
+<h2>8.3 &nbsp;Deployment Procedure (typical)</h2>
+<ol class="step-list">
+  <li>Provision a PostgreSQL instance (e.g., Neon) and copy its connection string into <code>DATABASE_URL</code>.</li>
+  <li>Set strong <code>JWT_SECRET</code> / <code>JWT_REFRESH_SECRET</code> values and <code>NODE_ENV=production</code>, <code>CORS_ORIGIN=https://your-domain</code>.</li>
+  <li><code>npm ci &amp;&amp; npm run build</code> on the host (or build in CI and ship <code>dist/</code>).</li>
+  <li><code>npm start</code> under a process manager (pm2, systemd, Docker, or platform runtime). The server bootstraps the schema automatically on first connect.</li>
+  <li>Verify <code>GET /api/health</code>, then log in with the admin account and change the seeded password.</li>
+</ol>
+<p>A ready-made production bundle ships in <code>dist/</code> and can be started immediately with <code>npm start</code>
+(plus a completed <code>.env</code>).</p>
+
+<!-- ================= 9 SECURITY ================= -->
+<h1 class="section" id="security"><span class="no">9</span>Security &amp; POPIA Compliance</h1>
+
+<h2>9.1 &nbsp;Controls Implemented</h2>
+<ul>
+  <li><strong>Authentication &amp; sessions</strong> — short-lived JWT access tokens, refresh rotation endpoint, role-matched login.</li>
+  <li><strong>Password storage</strong> — bcrypt hashing (cost 12); hashes are never returned by any endpoint.</li>
+  <li><strong>Authorisation</strong> — every write endpoint declares its permitted roles; deletion of learners is admin-only; medical data sits behind admin access.</li>
+  <li><strong>Input hardening</strong> — Zod schema validation on all mutating requests; parameterised SQL via Drizzle ORM (mitigates injection).</li>
+  <li><strong>Transport &amp; headers</strong> — helmet security headers; enable HTTPS at the hosting layer (recommended reverse proxy / platform TLS).</li>
+  <li><strong>Abuse prevention</strong> — general API limit 100 req/15&nbsp;min; strict 10 req/15&nbsp;min limiter on authentication endpoints.</li>
+  <li><strong>Data minimisation for guests</strong> — unauthenticated visitors see only public curriculum/event/journal content; no learner identities.</li>
+  <li><strong>Auditability</strong> — <code>kt_audit_logs</code> records user, action, payload and timestamp for significant writes.</li>
+  <li><strong>PII hygiene</strong> — <code>data_store.json</code> and <code>.env</code> are git-ignored; documents advise against committing PII.</li>
+</ul>
+
+<h2>9.2 &nbsp;POPIA Alignment</h2>
+<table>
+  <tr><th style="width:34%">Obligation</th><th>How the platform addresses it</th></tr>
+  <tr><td>Lawful processing &amp; consent</td><td>Enrolment wizard captures explicit POPIA information-processing consents (Step 5) before an application is accepted.</td></tr>
+  <tr><td>Minimality</td><td>Only ECD-operational fields are collected; role-scoped feeds mean each user sees only what they need.</td></tr>
+  <tr><td>Security safeguards</td><td>Hashed credentials, RBAC, rate limiting, validation, audit trail (§9.1).</td></tr>
+  <tr><td>Children's information</td><td>Child identities, birth records, addresses and phone numbers are never publicly indexed or exposed to unauthenticated visitors.</td></tr>
+  <tr><td>Operator accountability</td><td>Audit logs support internal investigations and evidence of processing activities.</td></tr>
+  <tr><td>Data subject participation</td><td>Parents view and correct their household profile via the Parent Hub; export/deletion requests can be fulfilled by the administrator with developer assistance.</td></tr>
+</table>
+
+<div class="callout warn">
+  <b class="tag">Residual Responsibility</b>
+  POPIA compliance is shared: the school remains the responsible party for lawful grounds, retention limits, and
+  breach-notification duties. Ensure the hosting provider agreement covers data processing, and schedule periodic
+  review of the audit log and user accounts.
+</div>
+
+<!-- ================= 10 LIMITS ================= -->
+<h1 class="section" id="limits"><span class="no">10</span>Known Limitations &amp; Handover Notes</h1>
+<table>
+  <tr><th style="width:6%">#</th><th style="width:38%">Item</th><th>Detail / Recommendation</th></tr>
+  <tr><td>1</td><td>Seeded passwords are trivial</td><td><code>parent</code>/<code>teacher</code>/<code>admin</code> defaults exist for training. Change all three before admitting real learner data.</td></tr>
+  <tr><td>2</td><td>Legacy plaintext comparison fallback in login</td><td>The login path retains a fallback comparison for pre-migration accounts alongside the bcrypt check. Recommend migrating any remaining accounts and removing the fallback (single-file change in the auth controller).</td></tr>
+  <tr><td>3</td><td>Token storage location</td><td>Access token is held in browser localStorage (<code>kt_session_token</code>), which is readable by page scripts. Acceptable for the current threat model; recommend moving to HttpOnly Secure cookies as a future hardening step.</td></tr>
+  <tr><td>4</td><td>JSON-file mode is demo-grade</td><td>Without <code>DATABASE_URL</code> the app persists to <code>data_store.json</code> on disk. Fine for demonstrations; always configure Postgres for production.</td></tr>
+  <tr><td>5</td><td>Legacy code kept for reference</td><td>Root <code>server.ts</code> (~1,400-line monolith) and <code>src/App.legacy.tsx</code> are superseded by <code>server/</code> and <code>src/features/</code>. They are excluded from normal runs (<code>npm run dev:legacy</code> only) and may be deleted after a settling-in period.</td></tr>
+  <tr><td>6</td><td>No payment gateway</td><td>Payments are a managed ledger only; card acquiring/EFT automation would be a new work package.</td></tr>
+  <tr><td>7</td><td>Email delivery depends on host configuration</td><td>Bulk-email/arrears features require provider credentials in the environment; verify before relying on them operationally.</td></tr>
+  <tr><td>8</td><td>Windows path quirk workaround</td><td><code>scripts/dev.mjs</code> exists because <code>tsx</code> mis-handles the space in the folder path ("New folder") on Windows; keep using <code>npm run dev</code> rather than invoking <code>tsx</code> directly.</td></tr>
+  <tr><td>9</td><td>Rate limits are conservative defaults</td><td>Tune <code>express-rate-limit</code> ceilings if the school grows significantly or integrates kiosk devices.</td></tr>
+</table>
+
+<!-- ================= 11 SUPPORT ================= -->
+<h1 class="section" id="support"><span class="no">11</span>Support, Maintenance &amp; Recommendations</h1>
+
+<h2>11.1 &nbsp;Routine Maintenance Calendar</h2>
+<table>
+  <tr><th style="width:22%">Cadence</th><th>Action</th></tr>
+  <tr><td>Daily</td><td>Glance at health endpoint / service uptime monitor.</td></tr>
+  <tr><td>Weekly</td><td>Review Audit Log Viewer for unexpected activity; confirm backups ran.</td></tr>
+  <tr><td>Monthly</td><td>Apply OS/runtime security patches; review user accounts (disable leavers); spot-check released reports.</td></tr>
+  <tr><td>Quarterly</td><td>Restore-test a database backup; rotate JWT secrets if policy requires; test emergency broadcast channel.</td></tr>
+  <tr><td>Annually</td><td>Dependency upgrade review (npm outdated / npm audit); POPIA retention clean-up of stale records.</td></tr>
+</table>
+
+<h2>11.2 &nbsp;Priority Recommendations After Handover</h2>
+<ol class="step-list">
+  <li><strong>Change all three seeded passwords</strong> and distribute private credentials to real staff.</li>
+  <li><strong>Configure automated backups</strong> (Neon point-in-time recovery or scheduled dumps) and store copies outside the server.</li>
+  <li><strong>Enable HTTPS</strong> end-to-end and set <code>CORS_ORIGIN</code>/<code>APP_URL</code> to the production domain.</li>
+  <li><strong>Remove the legacy plaintext login fallback</strong> once all accounts are confirmed hashed (item 10.2).</li>
+  <li><strong>Adopt uptime monitoring</strong> against <code>/api/health</code> with alerting to the principal's mailbox.</li>
+  <li><strong>Archive or delete the legacy files</strong> (<code>server.ts</code>, <code>App.legacy.tsx</code>) after one month of stable operation.</li>
+</ol>
+
+<h2>11.3 &nbsp;Where Things Live (Quick Reference)</h2>
+<table>
+  <tr><th style="width:34%">Need</th><th>Location</th></tr>
+  <tr><td>Developer/architecture README</td><td><code>README.md</code> (repository root)</td></tr>
+  <tr><td>Walkthrough video for staff training</td><td><code>presentation/kiddies-town-walkthrough.mp4</code></td></tr>
+  <tr><td>Sample developmental guide PDF</td><td><code>presentation/kt-ecd-developmental-guide.pdf</code></td></tr>
+  <tr><td>Environment template</td><td><code>.env.example</code></td></tr>
+  <tr><td>Database schema definitions</td><td><code>server/db/schema.ts</code></td></tr>
+  <tr><td>Seed/demo data &amp; bootstrap accounts</td><td><code>server/db/bootstrap.ts</code></td></tr>
+  <tr><td>End-to-end tests</td><td><code>scripts/e2e-test.mjs</code> (Playwright)</td></tr>
+</table>
+
+<p style="margin-top:8mm;color:var(--muted);font-size:9pt;">— End of handover pack. Prepared for the official transfer of the Kiddies Town ECD &amp; Academy portal, 22 August 2026. —</p>
+
+</body>
+</html>
